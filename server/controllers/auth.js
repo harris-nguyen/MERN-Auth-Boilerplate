@@ -10,9 +10,7 @@ const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-
 // below is to help avoid spam. We will send user a user email confirmation with web token
-
 exports.signup = (req, res) => {
   const { name, email, password } = req.body;
 
