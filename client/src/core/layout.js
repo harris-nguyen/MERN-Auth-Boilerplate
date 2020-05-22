@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import {Link, withRouter} from 'react-router-dom' // page does not reload when clicked on a nav bar link for example
 
-const Layout = ({children, match, history}) => {
+const Layout = ({children, match}) => {
 
   const isActive = path => {
     if(match.path === path){
