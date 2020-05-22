@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+// import { Link, Redirect } from "react-router-dom";
 import Layout from "../core/layout";
 import axios from "axios";
 // import { authenticate, isAuth } from "./helpers";
@@ -74,7 +74,7 @@ const Signin = ({ history }) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <h1 className="p-5 text-center">Signin</h1>
+        <h1 className="p-5 text-center">Sign in</h1>
         {signinForm()}
         <br />
         </div>
