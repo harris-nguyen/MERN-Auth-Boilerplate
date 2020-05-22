@@ -1,9 +1,9 @@
 const User = require('../models/user')
 const jwt = require("jsonwebtoken");
-const expressJwt = require("express-jwt");
-const _ = require("lodash");
-const { OAuth2Client } = require("google-auth-library");
-const fetch = require("node-fetch");
+// const expressJwt = require("express-jwt");
+// const _ = require("lodash");
+// const { OAuth2Client } = require("google-auth-library");
+// const fetch = require("node-fetch");
 
 exports.signup = (req, res) => {
   const { name, email, password } = req.body;

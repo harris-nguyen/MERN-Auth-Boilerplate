@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Layout from "../core/layout";
 import axios from "axios";
-// import { isAuth } from "./helpers";
+// import { authenticate, isAuth } from "./helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-const Signup = () => {
+const Signin = ({ history }) => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: "",
     buttonText: "Submit",
   });
 
-  const { name, email, password, buttonText } = values;
+  const { email, password, buttonText } = values;
 
   const handleChange = (name) => (event) => {
     // console.log(event.target.value);
@@ -26,39 +25,23 @@ const Signup = () => {
     setValues({ ...values, buttonText: "Submitting" });
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API}/signup`,
-      data: { name, email, password },
+      url: `${process.env.REACT_APP_API}/signin`,
+      data: { email, password },
     })
       .then((response) => {
-        console.log("SIGNUP SUCCESS", response);
-        setValues({
-          ...values,
-          name: "",
-          email: "",
-          password: "",
-          buttonText: "Submitted",
-        });
-        toast.success(response.data.message); // THIS IS THE POP UPS!
+        console.log("SIGNIN SUCCESS", response);
+        // save the response (user, token) localstorage/cookie
+        toast.success(`Hi ${response.data.user.name}, Welcome Back`); // THIS IS THE POP UPS!
       })
       .catch((error) => {
-        console.log("SIGNUP ERROR", error.response.data);
+        console.log("SIGNIN ERROR", error.response.data);
         setValues({ ...values, buttonText: "Submit" });
         toast.error(error.response.data.error); // THIS IS THE POP UPS!
       });
   };
 
-  const signupForm = () => (
+  const signinForm = () => (
     <form>
-      <div className="form-group">
-        <label className="text-muted">Name</label>
-        <input
-          onChange={handleChange("name")}
-          value={name}
-          type="text"
-          className="form-control"
-        />
-      </div>
-
       <div className="form-group">
         <label className="text-muted">Email</label>
         <input
@@ -91,15 +74,15 @@ const Signup = () => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <h1 className="p-5 text-center">Sign Up</h1>
-        {signupForm()}
+        <h1 className="p-5 text-center">Signin</h1>
+        {signinForm()}
         <br />
         </div>
         </Layout>
         );
       };
 
-      export default Signup;
+      export default Signin;
 
       // <Link
       //   to="/auth/password/forgot"
