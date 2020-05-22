@@ -5,36 +5,29 @@ const _ = require("lodash");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
 
-// sendgrid
-const sgMail = require("@sendgrid/mail");
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
 exports.signup = (req, res) => {
-    // console.log('REQ BODY ON SIGNUP', req.body);
-    const { name, email, password } = req.body;
+  const { name, email, password } = req.body;
 
-    User.findOne({ email }).exec((err, user) => {
-        if (user) {
-            return res.status(400).json({
-                error: 'Email is taken'
-            });
-        }
-    });
+  User.findOne({ email }).exec((err, user) => {
+    if (user) {
+      return res.status(400).json({
+        error: "Email is taken",
+      });
+    }
+      let newUser = new User({ name, email, password });
 
-    let newUser = new User({ name, email, password });
-
-    newUser.save((err, success) => {
-        if (err) {
-            console.log('SIGNUP ERROR', err);
-            return res.status(400).json({
-                error: err
-            });
-        }
-        res.json({
-            message: 'Signup success! Please signin'
-        });
-    });
+      newUser.save((err, success) => {
+          if (err) {
+              console.log('SIGNUP ERROR', err);
+              return res.status(400).json({
+                  error: err
+              });
+          }
+          res.json({
+              message: 'Signup success! Please signin'
+          });
+      });
+  });
 };
 
 exports.accountActivation = (req, res) => {

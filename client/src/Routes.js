@@ -6,12 +6,14 @@ import Signup from './auth/Signup'
 
 const Routes = () => {
   return (
+    <div className='container'>
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={App} />
         <Route path="/signup" exact component={Signup} />
       </Switch>
     </BrowserRouter>
+    </div>
   );
 }
 
