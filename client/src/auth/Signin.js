@@ -2,9 +2,10 @@ import React, { useState } from "react";
 // import { Link, Redirect } from "react-router-dom";
 import Layout from "../core/layout";
 import axios from "axios";
-// import { authenticate, isAuth } from "./helpers";
+import { authenticate, isAuth } from "./Helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { Redirect } from "react-router-dom";
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
@@ -31,7 +32,10 @@ const Signin = ({ history }) => {
       .then((response) => {
         console.log("SIGNIN SUCCESS", response);
         // save the response (user, token) localstorage/cookie
-        toast.success(`Hi ${response.data.user.name}, Welcome Back`); // THIS IS THE POP UPS!
+        authenticate(response, () => {
+          setValues({...values, name: '', email: '', password: '', buttonText: 'Submitted'})
+          toast.success(`Hi ${response.data.user.name}, Welcome Back`); // THIS IS THE POP UPS!
+        })
       })
       .catch((error) => {
         console.log("SIGNIN ERROR", error.response.data);
@@ -74,12 +78,13 @@ const Signin = ({ history }) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
+        {isAuth() ? <Redirect to="/" /> : null}
         <h1 className="p-5 text-center">Sign in</h1>
         {signinForm()}
         <br />
-        </div>
-        </Layout>
-        );
+      </div>
+    </Layout>
+  );
       };
 
       export default Signin;
