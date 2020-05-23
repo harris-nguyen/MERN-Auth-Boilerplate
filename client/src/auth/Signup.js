@@ -2,8 +2,9 @@ import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 import Layout from "../core/layout";
 import axios from "axios";
-// import { isAuth } from "./helpers";
+import { isAuth } from "./Helpers";
 import { ToastContainer, toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const Signup = () => {
@@ -91,12 +92,13 @@ const Signup = () => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
+        {isAuth() ? <Redirect to="/" /> : null}
         <h1 className="p-5 text-center">Sign Up</h1>
         {signupForm()}
         <br />
-        </div>
-        </Layout>
-        );
+      </div>
+    </Layout>
+  );
       };
 
       export default Signup;
