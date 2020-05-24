@@ -37,10 +37,7 @@ const Layout = ({children, match, history}) => {
 
       {isAuth() && (
         <li className="nav-item">
-          <span
-            className="nav-link">
-            {isAuth().name}
-          </span>
+          <span className="nav-link">{isAuth().name}</span>
         </li>
       )}
 
@@ -59,6 +56,7 @@ const Layout = ({children, match, history}) => {
           </span>
         </li>
       )}
+
     </ul>
   );
 
