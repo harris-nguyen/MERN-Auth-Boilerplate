@@ -37,7 +37,9 @@ const Layout = ({children, match, history}) => {
 
       {isAuth() && (
         <li className="nav-item">
-          <span className="nav-link">{isAuth().name}</span>
+          <Link to="/private" className="nav-link" style={isActive("/private")}>
+            Name: {isAuth().name}
+          </Link>
         </li>
       )}
 
@@ -56,7 +58,6 @@ const Layout = ({children, match, history}) => {
           </span>
         </li>
       )}
-
     </ul>
   );
 
