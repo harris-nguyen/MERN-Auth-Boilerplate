@@ -35,6 +35,7 @@ const Signin = ({ history }) => {
         authenticate(response, () => {
           setValues({...values, name: '', email: '', password: '', buttonText: 'Submitted'})
           toast.success(`Hi ${response.data.user.name}, Welcome Back`); // THIS IS THE POP UPS!
+          isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private')
         })
       })
       .catch((error) => {

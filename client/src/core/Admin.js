@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Layout from '../core/layout'
-// import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import Layout from "../core/layout";
 import axios from "axios";
 import { isAuth, getCookie, signout, updateUser } from "../auth/Helpers";
 import { ToastContainer, toast } from "react-toastify";
-import { Redirect, Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 
-const Private = ({ history }) => {
+const Admin = ({ history }) => {
   const [values, setValues] = useState({
     role: "",
     name: "",
@@ -57,7 +56,7 @@ const Private = ({ history }) => {
     setValues({ ...values, buttonText: "Submitting" });
     axios({
       method: "PUT",
-      url: `${process.env.REACT_APP_API}/user/update`,
+      url: `${process.env.REACT_APP_API}/admin/update`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -130,7 +129,7 @@ const Private = ({ history }) => {
     <Layout>
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
-        <h1 className="pt-5 text-center">Private</h1>
+        <h1 className="pt-5 text-center">Admin</h1>
         <p className="lead text-center">Profile update</p>
         {updateForm()}
       </div>
@@ -138,4 +137,4 @@ const Private = ({ history }) => {
   );
 };
 
-export default Private;
+export default Admin;
