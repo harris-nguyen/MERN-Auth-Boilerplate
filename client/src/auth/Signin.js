@@ -6,6 +6,7 @@ import { authenticate, isAuth } from "./Helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Redirect } from "react-router-dom";
+import Google from './Google'
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
@@ -81,6 +82,7 @@ const Signin = ({ history }) => {
         <ToastContainer />
         {isAuth() ? <Redirect to="/" /> : null}
         <h1 className="p-5 text-center">Sign in</h1>
+        <Google />
         {signinForm()}
         <br />
       </div>
