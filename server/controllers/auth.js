@@ -1,6 +1,6 @@
 const User = require('../models/user')
 const jwt = require("jsonwebtoken");
-// const expressJwt = require("express-jwt");
+const expressJwt = require("express-jwt");
 // const _ = require("lodash");
 // const { OAuth2Client } = require("google-auth-library");
 // const fetch = require("node-fetch");
@@ -90,5 +90,28 @@ exports.signin = (req, res) => {
       token,
       user: { _id, name, email, role },
     });
+  });
+};
+
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET, // req.user._id
+});
+
+exports.adminMiddleware = (req, res, next) => {
+  User.findById({ _id: req.user._id }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+
+    if (user.role !== "admin") {
+      return res.status(400).json({
+        error: "Admin resource. Access denied.",
+      });
+    }
+
+    req.profile = user;
+    next();
   });
 };

@@ -1,10 +1,9 @@
 const express = require("express");
-const morgan = require('morgan');
-const cors = require('cors')
+const morgan = require("morgan");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-require('dotenv').config()
-
+require("dotenv").config();
 
 const app = express();
 
@@ -16,30 +15,30 @@ const DB = process.env.DATABASE.replace(
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => {
-    console.log("mongoDB connected")
+    console.log("mongoDB connected");
   })
-  .catch(err => console.log('mongoDB error', err))
+  .catch((err) => console.log("mongoDB error", err));
 
 // import routes
-const authRoutes = require("./routes/auth");
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
-//  app middlewares
-
-app.use(morgan('dev')) // status code ex in terminal: GET /api/signup 304 4.194 ms - -
-app.use(bodyParser.json())
-
-//app.use(cors()) // allow all origins
-if ((process.env.NODE_ENV = "development")) {
-  app.use(cors({ origin: `http://localhost:3000` }));
+// app middlewares
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+// app.use(cors()); // allows all origins
+if ((process.env.NODE_ENV = 'development')) {
+    app.use(cors({ origin: `http://localhost:3000` }));
 }
 
-// route middleware
-app.use("/api", authRoutes);
+// middleware
+app.use('/api', authRoutes);
+app.use('/api', userRoutes);
 
 
 const port = process.env.PORT || 8000;
