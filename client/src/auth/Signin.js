@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
 import Google from './Google'
 import "react-toastify/dist/ReactToastify.min.css";
+import Facebook from './Facebook'
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
@@ -99,6 +100,7 @@ const Signin = ({ history }) => {
         {isAuth() ? <Redirect to="/" /> : null}
         <h1 className="p-5 text-center">Signin</h1>
         <Google informParent={informParent} />
+        <Facebook informParent={informParent} />
         {signinForm()}
       </div>
     </Layout>

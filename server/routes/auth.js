@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { signup, accountActivation, signin, googleLogin } = require("../controllers/auth");
+const { signup, accountActivation, signin, googleLogin, facebookLogin } = require("../controllers/auth");
 
 const {
   userSignupValidator,
@@ -14,5 +14,6 @@ router.post("/account-activation", accountActivation);
 router.post("/signin", userSigninValidator, runValidation, signin);
 
 router.post("/google-login", googleLogin);
+router.post("/facebook-login", facebookLogin);
 
 module.exports = router;
