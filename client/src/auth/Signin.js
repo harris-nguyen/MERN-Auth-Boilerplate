@@ -4,9 +4,9 @@ import Layout from "../core/layout";
 import axios from "axios";
 import { authenticate, isAuth } from "./Helpers";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
 import { Redirect } from "react-router-dom";
 import Google from './Google'
+import "react-toastify/dist/ReactToastify.min.css";
 
 const Signin = ({ history }) => {
   const [values, setValues] = useState({
@@ -22,6 +22,14 @@ const Signin = ({ history }) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
+  const informParent = (response) => {
+    authenticate(response, () => {
+      isAuth() && isAuth().role === "admin"
+        ? history.push("/admin")
+        : history.push("/private");
+    });
+  };
+
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, buttonText: "Submitting" });
@@ -34,15 +42,23 @@ const Signin = ({ history }) => {
         console.log("SIGNIN SUCCESS", response);
         // save the response (user, token) localstorage/cookie
         authenticate(response, () => {
-          setValues({...values, name: '', email: '', password: '', buttonText: 'Submitted'})
-          toast.success(`Hi ${response.data.user.name}, Welcome Back`); // THIS IS THE POP UPS!
-          isAuth() && isAuth().role === 'admin' ? history.push('/admin') : history.push('/private')
-        })
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            buttonText: "Submitted",
+          });
+          // toast.success(`Hey ${response.data.user.name}, Welcome back!`);
+          isAuth() && isAuth().role === "admin"
+            ? history.push("/admin")
+            : history.push("/private");
+        });
       })
       .catch((error) => {
         console.log("SIGNIN ERROR", error.response.data);
         setValues({ ...values, buttonText: "Submit" });
-        toast.error(error.response.data.error); // THIS IS THE POP UPS!
+        toast.error(error.response.data.error);
       });
   };
 
@@ -81,20 +97,12 @@ const Signin = ({ history }) => {
       <div className="col-md-6 offset-md-3">
         <ToastContainer />
         {isAuth() ? <Redirect to="/" /> : null}
-        <h1 className="p-5 text-center">Sign in</h1>
-        <Google />
+        <h1 className="p-5 text-center">Signin</h1>
+        <Google informParent={informParent} />
         {signinForm()}
-        <br />
       </div>
     </Layout>
   );
-      };
+};
 
-      export default Signin;
-
-      // <Link
-      //   to="/auth/password/forgot"
-      //   className="btn btn-sm btn-outline-danger"
-      // >
-      //   Forgot Password
-      // </Link>
+export default Signin;
