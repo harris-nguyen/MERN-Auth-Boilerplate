@@ -38,7 +38,7 @@ const Layout = ({children, match, history}) => {
       {isAuth() && isAuth().role === "admin" && (
         <li className="nav-item">
           <Link className="nav-link" style={isActive("/admin")} to="/admin">
-            {isAuth().name}
+            {isAuth().name} The Admin
           </Link>
         </li>
       )}
