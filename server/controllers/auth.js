@@ -117,16 +117,19 @@ exports.adminMiddleware = (req, res, next) => {
 };
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 exports.googleLogin = (req, res) => {
   const { idToken } = req.body;
 
   client
     .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID })
     .then((response) => {
-      // console.log('GOOGLE LOGIN RESPONSE',response)
+      console.log('GOOGLE LOGIN RESPONSE',response)
       const { email_verified, name, email } = response.payload;
+
       if (email_verified) {
         User.findOne({ email }).exec((err, user) => {
+
           if (user) {
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
               expiresIn: "7d",
