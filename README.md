@@ -9,4 +9,3 @@
 - Need App ID from https://developers.facebook.com/
 - Need OAuth 2.0 Client IDs from https://console.cloud.google.com/
 
-![MERN](MERN.gif) 
